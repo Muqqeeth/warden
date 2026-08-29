@@ -2,10 +2,10 @@ import json
 from datetime import datetime, timezone
 
 from app.agents.attacker import generate_attack, ATTACK_CATEGORIES
-from app.agents.target import query_naive_target as query_target, WEAK_TARGET_SYSTEM_PROMPT
+from app.agents.target import query_target, DEFAULT_TARGET_SYSTEM_PROMPT
 from app.agents.judge import judge_attack
 from app.agents.patcher import patch_prompt
-
+ from app.agents.target import WEAK_TARGET_SYSTEM_PROMPT
 
 def run_red_team_session(attempts_per_category: int = 1):
     """
@@ -14,7 +14,7 @@ def run_red_team_session(attempts_per_category: int = 1):
     system prompt and re-test the same attack to verify the fix.
     """
     results = []
-    current_system_prompt = "You are a helpful assistant."  # no defense — will break
+    current_system_prompt = WEAK_TARGET_SYSTEM_PROMPT
     patches_applied = 0
 
     for category in ATTACK_CATEGORIES:
